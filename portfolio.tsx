@@ -8,9 +8,15 @@ import { ThemeToggle } from "./components/theme-toggle";
 import { ProjectCard } from "./components/project-card";
 import { SkillBadge } from "./components/skill-badge";
 import { useTheme } from "./components/theme-provider";
+import React, { useRef, useState, useEffect } from "react";
 
 export default function Portfolio() {
   const { theme } = useTheme();
+  const [emailRevealed, setEmailRevealed] = useState(false);
+  const emailHoldTimeout = useRef<NodeJS.Timeout | null>(null);
+  const [showCopyBubble, setShowCopyBubble] = useState(false);
+  const [copied, setCopied] = useState(false);
+  const copyBubbleRef = useRef<HTMLDivElement | null>(null);
 
   const skills = [
     "Python",
@@ -26,30 +32,37 @@ export default function Portfolio() {
 
   const projects = [
     {
-      title: "Task Management App",
+      title: "Discord Bot",
       description:
-        "A full-stack web application for team collaboration with real-time updates, user authentication, and project management features.",
-      tech: ["React", "Node.js", "PostgreSQL", "Socket.io"],
-      github: "#",
-      demo: "#",
+        "Discord bot for career development with resume resources, real time job and event tracking, and learning material recommendations.",
+      tech: ["Python", "Discord.py", "GCP", "Nox"],
+      github: "https://github.com/innovateorange/DiscordBot/issues",
+      demo: "https://discord.gg/cvqbKxPtHE",
     },
     {
-      title: "Weather Dashboard",
+      title: "Flow",
       description:
-        "Interactive weather dashboard with location-based forecasts, data visualization, and responsive design.",
+        "Sleek browser extension that helps users maintain focus by blocking distracting elements while browsing.",
       tech: ["Next.js", "TypeScript", "Chart.js", "Weather API"],
-      github: "#",
-      demo: "#",
-    },
-    {
-      title: "E-commerce API",
-      description:
-        "RESTful API for an e-commerce platform with authentication, payment processing, and inventory management.",
-      tech: ["Python", "FastAPI", "MongoDB", "Stripe API"],
-      github: "#",
-      demo: "#",
+      github: "https://github.com/alantomw/Flow",
+      demo: "https://chromewebstore.google.com/detail/flow/odenofhkafaeedoohodgdndpeeadpndg",
     },
   ];
+
+  useEffect(() => {
+    if (!showCopyBubble) return;
+    function handleClick(e: MouseEvent) {
+      if (
+        copyBubbleRef.current &&
+        e.target instanceof Node &&
+        !copyBubbleRef.current.contains(e.target as Node)
+      ) {
+        setShowCopyBubble(false);
+      }
+    }
+    window.addEventListener("mousedown", handleClick);
+    return () => window.removeEventListener("mousedown", handleClick);
+  }, [showCopyBubble]);
 
   return (
     <div
@@ -120,40 +133,6 @@ export default function Portfolio() {
               i love osaka!
             </p>
           </div>
-
-          <div className="flex space-x-4 pt-4">
-            {[
-              { icon: Mail, href: "mailto:alex@example.com", label: "Email" },
-              {
-                icon: Github,
-                href: "https://github.com/alantomw",
-                label: "GitHub",
-              },
-              {
-                icon: Linkedin,
-                href: "https://www.linkedin.com/in/alan-tom/",
-                label: "LinkedIn",
-              },
-            ].map(({ icon: Icon, href, label }, index) => (
-              <Button
-                key={label}
-                variant="ghost"
-                size="sm"
-                asChild
-                className={`transition-all duration-300 hover:scale-110 ${
-                  theme === "dark"
-                    ? "text-slate-400 hover:text-white"
-                    : "text-slate-600 hover:text-black"
-                }`}
-                style={{ animationDelay: `${index * 150}ms` }}
-              >
-                <Link href={href} target="_blank">
-                  <Icon className="w-4 h-4 mr-2" />
-                  {label}
-                </Link>
-              </Button>
-            ))}
-          </div>
         </div>
       </section>
 
@@ -216,11 +195,92 @@ export default function Portfolio() {
         </Card>
       </section>
 
+      {/* Experience Timeline Section */}
+      <section id="experience" className="max-w-4xl mx-auto px-8 py-20">
+        <Card
+          className={`p-10 transition-all duration-500 backdrop-blur-sm ${
+            theme === "dark"
+              ? "bg-slate-900/30 border-slate-800/50 hover:bg-slate-900/50"
+              : "bg-slate-50/80 border-slate-200/50 hover:bg-slate-100/80"
+          }`}
+        >
+          <h2 className="text-3xl font-light mb-10 hover:scale-105 transition-transform duration-300 cursor-default">
+            Timeline
+          </h2>
+          <div className="relative pl-8">
+            {/* Vertical line */}
+            <div
+              className="absolute left-3 top-0 h-full w-0.5 bg-slate-300 dark:bg-slate-700"
+              style={{ zIndex: 0 }}
+            />
+            {/* Timeline items */}
+            {[
+              {
+                color: "bg-blue-600",
+                company: "iSchool at Syracuse University",
+                title: "NSF REU Reseacher",
+                years: "2025 - Now",
+                desc: "using NLP to analyze Trump's social media activities impact on the stock market",
+              },
+              {
+                color: "bg-yellow-400",
+                company: "Innovate Orange (CuseHacks)",
+                title: "President",
+                years: "2024 - Now",
+                desc: "leading a team of 20+ students to organize Syracuse University's hackathons and datathons",
+              },
+              {
+                color: "bg-green-600",
+                company: "Micron Technology",
+                title: "Software Development Engineer Intern",
+                years: "2025 - 2025",
+                desc: "developed an interactive UI for an educational semiconductor game",
+              },
+              {
+                color: "bg-red-600",
+                company: "Data Lab at Syracuse University",
+                title: "Research Assistant",
+                years: "2024 - 2025",
+                desc: "compared LLM memory with human memory",
+              },
+            ].map((item, idx) => (
+              <div
+                key={item.company + item.title}
+                className="flex items-start mb-12 last:mb-0 relative"
+                style={{ zIndex: 1 }}
+              >
+                {/* Dot */}
+                <span
+                  className={`absolute left-0 top-2 w-6 h-6 rounded-full border-4 border-white dark:border-slate-900 ${item.color}`}
+                  style={{ zIndex: 2 }}
+                />
+                <div className="ml-10 flex-1">
+                  <div className="flex flex-col md:flex-row md:items-center md:justify-between">
+                    <span className="text-lg font-semibold tracking-tight">
+                      {item.company}
+                    </span>
+                    <span className="text-md text-slate-400 dark:text-slate-400 md:ml-4 whitespace-nowrap">
+                      {item.years}
+                    </span>
+                  </div>
+                  <div className="italic text-slate-500 dark:text-slate-300 text-base mb-1">
+                    {item.title}
+                  </div>
+                  <ul className="list-disc ml-5 text-slate-500 dark:text-slate-400">
+                    <li>{item.desc}</li>
+                  </ul>
+                </div>
+              </div>
+            ))}
+          </div>
+        </Card>
+      </section>
+
       {/* Projects Section */}
       <section id="projects" className="max-w-4xl mx-auto px-8 py-20">
         <div className="space-y-12">
           <h2 className="text-3xl font-light hover:scale-105 transition-transform duration-300 cursor-default">
-            Featured Projects
+            Projects
           </h2>
           <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
             {projects.map((project, index) => (
@@ -255,19 +315,151 @@ export default function Portfolio() {
               Always interested in new opportunities and collaborations. Let's
               build something amazing together.
             </p>
-            <Button
-              asChild
-              className={`transition-all duration-300 hover:scale-105 group ${
-                theme === "dark"
-                  ? "bg-white text-black hover:bg-slate-200"
-                  : "bg-black text-white hover:bg-slate-800"
-              }`}
-            >
-              <Link href="mailto:alex@example.com">
-                Get In Touch
-                <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform duration-300" />
-              </Link>
-            </Button>
+            <div className="flex justify-center space-x-4 pt-4">
+              {/* Email Button: Press and Hold to Reveal */}
+              <Button
+                variant="ghost"
+                size="sm"
+                asChild={false}
+                className={`transition-all duration-300 hover:scale-110 ${
+                  theme === "dark"
+                    ? "text-slate-400 hover:text-white"
+                    : "text-slate-600 hover:text-black"
+                }`}
+                onMouseDown={() => {
+                  if (!emailRevealed) {
+                    emailHoldTimeout.current = setTimeout(() => {
+                      setEmailRevealed(true);
+                    }, 700);
+                  }
+                }}
+                onMouseUp={() => {
+                  if (emailHoldTimeout.current) {
+                    clearTimeout(emailHoldTimeout.current);
+                  }
+                }}
+                onMouseLeave={() => {
+                  if (emailHoldTimeout.current) {
+                    clearTimeout(emailHoldTimeout.current);
+                  }
+                }}
+                onTouchStart={() => {
+                  if (!emailRevealed) {
+                    emailHoldTimeout.current = setTimeout(() => {
+                      setEmailRevealed(true);
+                    }, 700);
+                  }
+                }}
+                onTouchEnd={() => {
+                  if (emailHoldTimeout.current) {
+                    clearTimeout(emailHoldTimeout.current);
+                  }
+                }}
+              >
+                {emailRevealed ? (
+                  <span className="flex items-center relative">
+                    <Mail className="w-4 h-4 mr-2" />
+                    <span
+                      className="cursor-pointer underline decoration-dotted decoration-2 underline-offset-4"
+                      onClick={() => {
+                        setShowCopyBubble((prev) => !prev);
+                        setCopied(false);
+                      }}
+                    >
+                      alanwtom@outlook.com
+                    </span>
+                    {/* Copy Bubble */}
+                    {showCopyBubble && (
+                      <div
+                        ref={copyBubbleRef}
+                        className={`inline-block absolute left-1/2 top-full mt-2 -translate-x-1/2 z-50 rounded-xl shadow-lg px-1 py-1 text-sm font-medium transition-all duration-200 ${
+                          theme === "dark"
+                            ? "bg-slate-800 text-white border border-slate-700"
+                            : "bg-white text-black border border-slate-200"
+                        }`}
+                        style={{ boxShadow: "0 8px 32px 0 rgba(0,0,0,0.18)" }}
+                      >
+                        {copied ? (
+                          <span className="text-green-500 text-[10px]">
+                            Copied!
+                          </span>
+                        ) : (
+                          <div
+                            role="button"
+                            tabIndex={0}
+                            className={`inline-block text-[10px] text-left px-0.5 py-0 bg-transparent hover:underline focus:outline-none cursor-pointer select-none font-normal transition-colors duration-150 shadow-none border-none m-0 ${
+                              theme === "dark"
+                                ? "hover:text-green-400"
+                                : "hover:text-green-600"
+                            }`}
+                            onClick={async (e) => {
+                              e.stopPropagation();
+                              await navigator.clipboard.writeText(
+                                "alanwtom@outlook.com"
+                              );
+                              setCopied(true);
+                              setTimeout(() => {
+                                setShowCopyBubble(false);
+                              }, 1200);
+                            }}
+                            onKeyDown={async (e) => {
+                              if (e.key === "Enter" || e.key === " ") {
+                                e.preventDefault();
+                                await navigator.clipboard.writeText(
+                                  "alanwtom@outlook.com"
+                                );
+                                setCopied(true);
+                                setTimeout(() => {
+                                  setShowCopyBubble(false);
+                                }, 1200);
+                              }
+                            }}
+                          >
+                            Copy Email
+                          </div>
+                        )}
+                      </div>
+                    )}
+                  </span>
+                ) : (
+                  <span className="flex items-center">
+                    <Mail className="w-4 h-4 mr-2" />
+                    Press & Hold for Email
+                  </span>
+                )}
+              </Button>
+              {/* Other contact icons */}
+              {[
+                {
+                  icon: Github,
+                  href: "https://github.com/alantomw",
+                  label: "GitHub",
+                },
+                {
+                  icon: Linkedin,
+                  href: "https://www.linkedin.com/in/alan-tom/",
+                  label: "LinkedIn",
+                },
+              ].map(({ icon: Icon, href, label }, index) => (
+                <Button
+                  key={label}
+                  variant="ghost"
+                  size="sm"
+                  asChild
+                  className={`transition-all duration-300 hover:scale-110 ${
+                    theme === "dark"
+                      ? "text-slate-400 hover:text-white"
+                      : "text-slate-600 hover:text-black"
+                  }`}
+                  style={{ animationDelay: `${(index + 1) * 150}ms` }}
+                >
+                  <Link href={href} target="_blank">
+                    <Icon className="w-4 h-4 mr-2" />
+                    {label}
+                  </Link>
+                </Button>
+              ))}
+            </div>
           </div>
         </Card>
       </section>
