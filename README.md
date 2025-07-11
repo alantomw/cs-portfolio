@@ -1,5 +1,3 @@
-# CS Portfolio
-
 A modern, responsive portfolio website built with Next.js, TypeScript, and Tailwind CSS. Features a dark theme with glassmorphism effects, smooth animations, and a professional design suitable for software engineers.
 
 ## 🚀 Features
@@ -138,4 +136,4 @@ If you have any questions or need help, please open an issue on GitHub.
 
 ---
 
-Built with ❤️ using Next.js and Tailwind CSS 
+Built with ❤️ using Next.js and Tailwind CSS

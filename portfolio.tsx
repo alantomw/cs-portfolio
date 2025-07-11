@@ -185,8 +185,8 @@ export default function Portfolio() {
       {/* Footer */}
       <footer className="border-t border-slate-800/50 mt-20 py-8 backdrop-blur-sm">
         <div className="max-w-4xl mx-auto px-8 text-center">
-          <p className="text-slate-500 text-sm hover:text-slate-400 transition-colors duration-300">
-            Built with Next.js and a lot of coffee ☕
+          <p className="text-slate-500 text-xs mt-2 hover:text-slate-400 transition-colors duration-300">
+            © 2025 Alan Tom. All rights reserved.
           </p>
         </div>
       </footer>
