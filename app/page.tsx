@@ -1,5 +1,10 @@
 import Portfolio from "../portfolio"
+import { ThemeProvider } from "../components/theme-provider"
 
 export default function Page() {
-  return <Portfolio />
+  return (
+    <ThemeProvider>
+      <Portfolio />
+    </ThemeProvider>
+  )
 }

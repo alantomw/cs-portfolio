@@ -7,8 +7,11 @@ import { Mountain, Mail, Github, Linkedin, ArrowRight } from "lucide-react"
 import { ThemeToggle } from "./components/theme-toggle"
 import { ProjectCard } from "./components/project-card"
 import { SkillBadge } from "./components/skill-badge"
+import { useTheme } from "./components/theme-provider"
 
 export default function Portfolio() {
+  const { theme } = useTheme()
+
   const skills = [
     "JavaScript",
     "TypeScript",
@@ -52,27 +55,52 @@ export default function Portfolio() {
   ]
 
   return (
-    <div className="min-h-screen bg-black text-white overflow-x-hidden">
-      {/* Navigation */}
-      <nav className="flex items-center justify-between px-8 py-6 backdrop-blur-sm bg-black/80 sticky top-0 z-50 border-b border-slate-800/50">
-        <div className="flex items-center space-x-8">
-          <Mountain className="w-6 h-6 text-white hover:scale-110 transition-transform duration-300" />
-          <div className="hidden md:flex space-x-6">
-            {["Home", "About", "Projects", "Contact"].map((item, index) => (
-              <Link
-                key={item}
-                href={`#${item.toLowerCase()}`}
-                className="text-slate-300 hover:text-white transition-all duration-300 hover:scale-105 relative group"
-                style={{ animationDelay: `${index * 100}ms` }}
-              >
-                {item}
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-white transition-all duration-300 group-hover:w-full"></span>
-              </Link>
-            ))}
+    <div className={`min-h-screen overflow-x-hidden transition-colors duration-300 ${
+      theme === "dark"
+        ? "bg-black text-white"
+        : "bg-white text-black"
+    }`}>
+                      {/* Navigation */}
+        <nav className={`backdrop-blur-sm sticky top-0 z-50 transition-colors duration-300 ${
+          theme === "dark"
+            ? "bg-black/80 border-b border-slate-800/50"
+            : "bg-white/80 border-b border-slate-200/50"
+        }`}>
+          <div className="max-w-4xl mx-auto px-8 py-6 flex items-center justify-between">
+            {/* Logo on the left */}
+            <div className="flex items-center">
+              <Mountain className={`w-6 h-6 hover:scale-110 transition-transform duration-300 ${
+                theme === "dark" ? "text-white" : "text-black"
+              }`} />
+            </div>
+
+            {/* Navigation links in center */}
+            <div className="hidden md:flex space-x-6">
+              {["Home", "About", "Projects", "Contact"].map((item, index) => (
+                <Link
+                  key={item}
+                  href={`#${item.toLowerCase()}`}
+                  className={`transition-all duration-300 hover:scale-105 relative group ${
+                    theme === "dark"
+                      ? "text-slate-300 hover:text-white"
+                      : "text-slate-600 hover:text-black"
+                  }`}
+                  style={{ animationDelay: `${index * 100}ms` }}
+                >
+                  {item}
+                  <span className={`absolute -bottom-1 left-0 w-0 h-0.5 transition-all duration-300 group-hover:w-full ${
+                    theme === "dark" ? "bg-white" : "bg-black"
+                  }`}></span>
+                </Link>
+              ))}
+            </div>
+
+            {/* Theme toggle on the right */}
+            <div className="flex items-center">
+              <ThemeToggle />
+            </div>
           </div>
-        </div>
-        <ThemeToggle />
-      </nav>
+        </nav>
 
       {/* Hero Section */}
       <section id="home" className="max-w-4xl mx-auto px-8 py-20">
@@ -90,8 +118,8 @@ export default function Portfolio() {
           <div className="flex space-x-4 pt-4">
             {[
               { icon: Mail, href: "mailto:alex@example.com", label: "Email" },
-              { icon: Github, href: "#", label: "GitHub" },
-              { icon: Linkedin, href: "#", label: "LinkedIn" },
+              { icon: Github, href: "https://github.com/alantomw", label: "GitHub" },
+              { icon: Linkedin, href: "https://www.linkedin.com/in/alan-tom/", label: "LinkedIn" },
             ].map(({ icon: Icon, href, label }, index) => (
               <Button
                 key={label}
