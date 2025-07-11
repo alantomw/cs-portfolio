@@ -109,9 +109,10 @@ export default function Portfolio() {
             <h1 className="text-5xl md:text-7xl font-light tracking-tight hover:scale-105 transition-transform duration-500 cursor-default">
               Alan Tom
             </h1>
-            <p className="text-slate-400 text-lg md:text-xl max-w-2xl leading-relaxed">
-              your average coffee enthusiast from the bay area trying to document the struggles of becoming a software
-              engineer.
+            <p className={`text-lg md:text-xl max-w-2xl leading-relaxed ${
+              theme === "dark" ? "text-slate-400" : "text-slate-600"
+            }`}>
+              i love osaka!
             </p>
           </div>
 
@@ -126,7 +127,11 @@ export default function Portfolio() {
                 variant="ghost"
                 size="sm"
                 asChild
-                className="text-slate-400 hover:text-white transition-all duration-300 hover:scale-110"
+                className={`transition-all duration-300 hover:scale-110 ${
+                  theme === "dark"
+                    ? "text-slate-400 hover:text-white"
+                    : "text-slate-600 hover:text-black"
+                }`}
                 style={{ animationDelay: `${index * 150}ms` }}
               >
                 <Link href={href} target="_blank">
@@ -139,28 +144,37 @@ export default function Portfolio() {
         </div>
       </section>
 
-      {/* About Section */}
-      <section id="about" className="max-w-4xl mx-auto px-8 py-20">
-        <Card className="bg-slate-900/30 border-slate-800/50 p-8 hover:bg-slate-900/50 transition-all duration-500 backdrop-blur-sm">
+              {/* About Section */}
+        <section id="about" className="max-w-4xl mx-auto px-8 py-20">
+          <Card className={`p-8 transition-all duration-500 backdrop-blur-sm ${
+            theme === "dark"
+              ? "bg-slate-900/30 border-slate-800/50 hover:bg-slate-900/50"
+              : "bg-slate-50/80 border-slate-200/50 hover:bg-slate-100/80"
+          }`}>
           <div className="space-y-6">
             <h2 className="text-3xl font-light mb-6 hover:scale-105 transition-transform duration-300 cursor-default">
               About Me
             </h2>
-            <div className="space-y-4 text-slate-300 leading-relaxed">
-              <p className="hover:text-slate-200 transition-colors duration-300">
-                I'm a computer science student passionate about building things that matter. When I'm not coding, you'll
-                find me exploring new coffee shops, reading tech blogs, or working on side projects that solve real
-                problems.
+            <div className={`space-y-4 leading-relaxed ${
+              theme === "dark" ? "text-slate-300" : "text-slate-600"
+            }`}>
+              <p className={`transition-colors duration-300 ${
+                theme === "dark" ? "hover:text-slate-200" : "hover:text-slate-800"
+              }`}>
+                I'm a computer science junior at Syracuse University. In my free time, I lead CuseHacks, a student-run hackathon, and try to travel as much as possible.
               </p>
-              <p className="hover:text-slate-200 transition-colors duration-300">
+              <p className={`transition-colors duration-300 ${
+                theme === "dark" ? "hover:text-slate-200" : "hover:text-slate-800"
+              }`}>
                 Currently learning full-stack development and always looking for opportunities to collaborate on
-                interesting projects. I believe in writing clean, maintainable code and creating user experiences that
-                delight.
+                interesting projects.
               </p>
             </div>
 
             <div className="pt-6">
-              <h3 className="text-xl font-medium mb-4 hover:scale-105 transition-transform duration-300 cursor-default">
+              <h3 className={`text-xl font-medium mb-4 hover:scale-105 transition-transform duration-300 cursor-default ${
+                theme === "dark" ? "text-white" : "text-black"
+              }`}>
                 Tech Stack
               </h3>
               <div className="flex flex-wrap gap-3">
@@ -187,19 +201,29 @@ export default function Portfolio() {
         </div>
       </section>
 
-      {/* Contact Section */}
-      <section id="contact" className="max-w-4xl mx-auto px-8 py-20">
-        <Card className="bg-gradient-to-r from-slate-900/30 to-slate-800/30 border-slate-700/50 p-12 text-center hover:scale-[1.02] transition-all duration-500 backdrop-blur-sm">
+              {/* Contact Section */}
+        <section id="contact" className="max-w-4xl mx-auto px-8 py-20">
+          <Card className={`p-12 text-center hover:scale-[1.02] transition-all duration-500 backdrop-blur-sm ${
+            theme === "dark"
+              ? "bg-gradient-to-r from-slate-900/30 to-slate-800/30 border-slate-700/50"
+              : "bg-gradient-to-r from-slate-50/80 to-slate-100/80 border-slate-200/50"
+          }`}>
           <div className="space-y-6">
             <h2 className="text-3xl font-light hover:scale-105 transition-transform duration-300 cursor-default">
               Let's Connect
             </h2>
-            <p className="text-slate-400 text-lg max-w-md mx-auto">
+            <p className={`text-lg max-w-md mx-auto ${
+              theme === "dark" ? "text-slate-400" : "text-slate-600"
+            }`}>
               Always interested in new opportunities and collaborations. Let's build something amazing together.
             </p>
             <Button
               asChild
-              className="bg-white text-black hover:bg-slate-200 transition-all duration-300 hover:scale-105 group"
+              className={`transition-all duration-300 hover:scale-105 group ${
+                theme === "dark"
+                  ? "bg-white text-black hover:bg-slate-200"
+                  : "bg-black text-white hover:bg-slate-800"
+              }`}
             >
               <Link href="mailto:alex@example.com">
                 Get In Touch
@@ -211,9 +235,13 @@ export default function Portfolio() {
       </section>
 
       {/* Footer */}
-      <footer className="border-t border-slate-800/50 mt-20 py-8 backdrop-blur-sm">
+      <footer className={`border-t mt-20 py-8 backdrop-blur-sm transition-colors duration-300 ${
+        theme === "dark" ? "border-slate-800/50" : "border-slate-200/50"
+      }`}>
         <div className="max-w-4xl mx-auto px-8 text-center">
-          <p className="text-slate-500 text-xs mt-2 hover:text-slate-400 transition-colors duration-300">
+          <p className={`text-xs mt-2 transition-colors duration-300 ${
+            theme === "dark" ? "text-slate-500 hover:text-slate-400" : "text-slate-500 hover:text-slate-600"
+          }`}>
             © 2025 Alan Tom. All rights reserved.
           </p>
         </div>
