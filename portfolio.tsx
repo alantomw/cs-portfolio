@@ -128,13 +128,6 @@ export default function Portfolio() {
             <h1 className="text-5xl md:text-7xl font-light tracking-tight transition-transform duration-500 cursor-default">
               Alan Tom
             </h1>
-            <p
-              className={`text-lg md:text-xl max-w-2xl leading-relaxed ${
-                theme === "dark" ? "text-slate-400" : "text-slate-600"
-              }`}
-            >
-              i love osaka!
-            </p>
           </div>
         </div>
       </section>
@@ -336,10 +329,10 @@ export default function Portfolio() {
       {/* Contact Section */}
       <section id="contact" className="max-w-4xl mx-auto px-8 py-12">
         <Card
-          className={`p-12 text-center hover:scale-[1.02] transition-all duration-500 backdrop-blur-sm ${
+          className={`p-8 transition-all duration-500 backdrop-blur-sm ${
             theme === "dark"
-              ? "bg-gradient-to-r from-slate-900/30 to-slate-800/30 border-slate-700/50"
-              : "bg-gradient-to-r from-slate-50/80 to-slate-100/80 border-slate-200/50"
+              ? "bg-slate-900/30 border-slate-800/50 hover:bg-slate-900/50"
+              : "bg-slate-50/80 border-slate-200/50 hover:bg-slate-100/80"
           }`}
         >
           <div className="space-y-6">

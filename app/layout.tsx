@@ -15,11 +15,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <link
-          rel="icon"
-          href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23000'/%3E%3Ctext x='50%' y='54%' text-anchor='middle' dominant-baseline='middle' font-family='Inter,Arial,sans-serif' font-size='32' font-weight='bold' fill='white'%3EA T%3C/text%3E%3C/svg%3E"
-          type="image/svg+xml"
-        />
+        <link rel="icon" href="/images/cockatiel.webp" type="image/webp" />
       </head>
       <body>{children}</body>
     </html>
